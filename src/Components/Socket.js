@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import Table from "./Table";
+import validator from "isin-validator";
 
 const Socket = () => {
   const [isPaused, setPause] = useState(false);
+  const [error, setError] = useState("");
   const [ISIN, setISIN] = useState("");
   const [data, setdata] = useState({});
   const ws = useRef(null);
@@ -37,6 +39,7 @@ const Socket = () => {
 
   const closeSocket = () => {
     ws.current.onclose = () => console.log("ws closed");
+    openSocket();
   };
 
   const subscribe = (isin) => {
@@ -57,11 +60,29 @@ const Socket = () => {
   };
 
   const handleSubmit = (event) => {
+    const value = event.target.isin.value;
     event.preventDefault();
-    subscribe(event.target.isin.value);
+    if(ISIN === value) {
+       return setError('same');
+    }
+    subscribe(value);
     ISIN
-      ? unsubscribe(ISIN, event.target.isin.value)
-      : setISIN(event.target.isin.value);
+      ? unsubscribe(ISIN, value)
+      : setISIN(value);
+  };
+
+  const handleValidation = (event) => {
+    const value = event.target.value;
+    if(!value) {
+      return setError('empty');
+   } else {
+      setError('');
+   }
+    if (validator(value)) {
+      return setError("ISIN is invalid!");
+    }
+    console.log("🚀 ~ file: Socket.js ~ line 69 ~ handleValidation ~ event", event.target.value);
+
   };
 
   return (
@@ -69,8 +90,9 @@ const Socket = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Enter your name:
-          <input name="isin" type="text" />
+          <input name="isin" type="text" onChange={handleValidation} />
         </label>
+        <p>{error ? error : null}</p>
         <input type="submit" />
       </form>
       <button onClick={() => setPause(!isPaused)}>

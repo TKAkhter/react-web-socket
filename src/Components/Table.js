@@ -11,6 +11,7 @@ const Table = ({ data }) => {
     };
     setRowsData([...rowsData, rowsInput]);
   };
+
   const deleteTableRows = (index) => {
     const rows = [...rowsData];
     rows.splice(index, 1);
@@ -39,10 +40,16 @@ const Table = ({ data }) => {
               </tr>
             </thead>
             <tbody>
-              <TableRows
+              {/* <TableRows
                 rowsData={rowsData}
                 deleteTableRows={deleteTableRows}
-              />
+              /> */}
+              <tr>
+                {Object.keys(data).map((item) => {
+                  return <td key={item}>{ item == 'isin' ? data[item] : parseFloat(data[item]).toFixed(3)}</td>;
+                })}
+              </tr>
+              
             </tbody>
           </table>
         </div>
