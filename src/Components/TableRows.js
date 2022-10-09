@@ -1,8 +1,6 @@
 function TableRows({ rowsData, deleteTableRows }) {
-//   return Object.keys(rowsData).map((data, index) => {
+  // return rowsData.map((data, index) => {
     const { isin, price, bid, ask } = rowsData;
-    // console.log("🚀 ~ file: TableRows.js ~ line 4 ~ returnObject.keys ~ data", data);
-    // console.log("🚀 ~ file: TableRows.js ~ line 4 ~ returnObject.keys ~ isin", rowsData[data]);
     return (
       <tr key={isin} className={isin}>
         <td>
@@ -27,6 +25,6 @@ function TableRows({ rowsData, deleteTableRows }) {
         </td>
       </tr>
     );
-//   });
+  // });
 }
 export default TableRows;

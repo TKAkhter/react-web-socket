@@ -15,7 +15,7 @@ const Form = () => {
       return setError("same");
     }
     setISIN([...ISIN, value]);
-    setWs([...ws,subscribe(value)]);
+    setWs([...ws, subscribe(value)]);
   };
 
   const handleValidation = (event) => {
@@ -35,17 +35,33 @@ const Form = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Enter your name:
-          <input name="isin" type="text" onChange={handleValidation} />
-        </label>
-        <p>{error ? error : null}</p>
-        <input type="submit" />
-      </form>
+    <div>
+      <div className="heading">
+        {" "}
+        <h2>Stock Trading App</h2>
+      </div>
+      <div className="card">
+        <form onSubmit={handleSubmit}>
+          <div className="input-box">
+            <label>Enter ISIN:</label>
+            <input
+              placeholder="Enter ISIN to add on Wishlist"
+              name="isin"
+              type="text"
+              onChange={handleValidation}
+            />
+            <p>{error ? error : null}</p>
+          </div>
+          <div className="button-row">
+            <input type="submit" />
+            {/* <button onClick={() => setPause(!isPaused)}>
+              {isPaused ? "Resume" : "Pause"}
+            </button> */}
+          </div>
+        </form>
+      </div>
       <Table wsArr={ws} isinArr={ISIN} />
-    </>
+    </div>
   );
 };
 export default Form;
