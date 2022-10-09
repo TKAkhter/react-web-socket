@@ -1,6 +1,6 @@
 import { useState } from "react";
 import validator from "isin-validator";
-import { subscribe } from "./Socket";
+import { subscribe, unsubscribe } from "./Socket";
 import Table from "./Table";
 
 const Form = () => {
@@ -60,7 +60,7 @@ const Form = () => {
           </div>
         </form>
       </div>
-      <Table wsArr={ws} isinArr={ISIN} />
+      <Table wsArr={ws} isinArr={ISIN} setIsinArr={setISIN} unsubscribe={unsubscribe} />
     </div>
   );
 };

@@ -143,4 +143,12 @@ export const subscribe = (isin) => {
   return ws;
 };
 
+export const unsubscribe = (isin, ws) => {
+  const msg = {
+    unsubscribe: isin,
+  };
+  ws.send(JSON.stringify(msg));
+  console.log("[close] Connection unsubscribed");
+}
+
 export default Socket;
