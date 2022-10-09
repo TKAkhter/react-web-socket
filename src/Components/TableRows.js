@@ -1,8 +1,10 @@
 function TableRows({ rowsData, deleteTableRows }) {
-  return rowsData.map((data, index) => {
-    const { isin, price, bid, ask } = data;
+//   return Object.keys(rowsData).map((data, index) => {
+    const { isin, price, bid, ask } = rowsData;
+    // console.log("🚀 ~ file: TableRows.js ~ line 4 ~ returnObject.keys ~ data", data);
+    // console.log("🚀 ~ file: TableRows.js ~ line 4 ~ returnObject.keys ~ isin", rowsData[data]);
     return (
-      <tr key={index}>
+      <tr key={isin} className={isin}>
         <td>
           <p>{isin}</p>
         </td>
@@ -18,13 +20,13 @@ function TableRows({ rowsData, deleteTableRows }) {
         <td>
           <button
             className="btn btn-outline-danger"
-            onClick={() => deleteTableRows(index)}
+            onClick={() => deleteTableRows(isin)}
           >
             x
           </button>
         </td>
       </tr>
     );
-  });
+//   });
 }
 export default TableRows;
