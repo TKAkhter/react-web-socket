@@ -2,16 +2,17 @@ const Socket = () => {
   return <></>;
 };
 
-export const subscribe = (isin, wsArr) => {
+export const initialize = (isin) => {
   const ws = new WebSocket("ws://159.89.15.214:8080/");
+  return subscribe(isin, ws);
+};
 
+export const subscribe = (isin, ws) => {
   const msg = {
     subscribe: isin,
   };
-  console.log("🚀 ~ file: Socket.js ~ line 11 ~ subscribe ~ isin", isin);
 
   ws.onopen = () => {
-    console.log(ws.readyState, "ws.readyState");
     console.log(`[Open] Connection Opened ${isin}`);
     ws.send(JSON.stringify(msg));
   };

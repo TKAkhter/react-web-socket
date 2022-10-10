@@ -2,34 +2,33 @@ import { useState, useEffect } from "react";
 import TableRows from "../TableRows";
 import "./Table.css";
 
-const Table = ({ wsArr, isinArr, unsubscribe, setIsinArr }) => {
+const Table = ({ ws, isinArr, unsubscribe, setIsinArr }) => {
   const [rowsData, setRowsData] = useState([]);
-  const [isPaused, setPause] = useState(false);
 
   const deleteTableRows = (index, isin, ws) => {
+    const newIsinArr = isinArr.filter((item) => item !== isin);
+    console.log("🚀 ~ file: Table.js ~ line 10 ~ deleteTableRows ~ newIsinArr", newIsinArr);
+    setIsinArr(newIsinArr);
     const rows = [...rowsData];
     rows.splice(index, 1);
     setRowsData(rows);
     unsubscribe(isin, ws);
-    const newIsinArr = isinArr.filter((item) => item !== isin);
-    setIsinArr(() => {
-      return newIsinArr;
-    });
+    
   };
 
   useEffect(() => {
-    isinArr.map((isin, idx) => {
+    isinArr.map((isin) => {
       const rowsInput = {
         isin: isin,
         price: "",
         bid: "",
         ask: "",
-        ws: wsArr[idx],
+        ws:ws
       };
       setRowsData([...rowsData, rowsInput]);
       return () => {};
     });
-  }, [wsArr]);
+  }, [ws]);
 
   return (
     <div className="table-section">
@@ -54,13 +53,6 @@ const Table = ({ wsArr, isinArr, unsubscribe, setIsinArr }) => {
                 />
               </tbody>
             </table>
-          </div>
-          <div className="col-sm-4">
-            US0004026250
-            <button onClick={() => setPause(!isPaused)}>
-              {isPaused ? "Resume" : "Pause"}
-            </button>
-            US0378330015
           </div>
         </div>
       </div>

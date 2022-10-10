@@ -38,7 +38,6 @@ button {
   color: #fff;
   outline: none;
   border-radius: 5px;
-  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
   cursor: pointer;
   margin: 5px;
   font-size: 18px;
@@ -53,4 +52,11 @@ button {
 }
 .inactive {
   background: #dc3545;
+}
+
+.btn-table {
+  font-size: 0.9rem;
+  width: 120px;
+  border-radius: 30px;
+  padding: 10px;
 }

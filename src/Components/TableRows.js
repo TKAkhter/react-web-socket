@@ -47,7 +47,7 @@ function TableRows({ rowsData, deleteTableRows, status }) {
         </td>
         <td>
           <button
-            className="btn btn-outline-danger inactive"
+            className="btn btn-table inactive"
             onClick={() => {
               deleteTableRows(index, isin, ws);
               deleteTableData(index, row, setRow);

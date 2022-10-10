@@ -19,8 +19,8 @@ form {
 .input-box input {
   width: -webkit-fill-available;
   padding: 15px;
-  box-shadow: 0px 4px 4px -4px rgb(0 0 0 / 25%);
-  background: #f3fafc;
+  border-radius: 5px;
+  background: #ffffff;
   font-family: "Urbanist", sans-serif;
 }
 
@@ -39,7 +39,7 @@ input {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-width: 1px;
   border-style: solid;
-  border-color: #e5e5e5;
+  border-color: #ededed;
 }
 
 input.success {
@@ -70,4 +70,9 @@ input.error:focus {
   font-size: 0.85rem;
   color: #dc3545;
   display: block;
+}
+.info {
+  color: #999;
+  padding-bottom: 10px;
+  font-size: 0.85rem;
 }
