@@ -8,6 +8,7 @@ import "./Form.css";
 const Home = () => {
   const [ISIN, setISIN] = useState([]);
   const [ws, setWs] = useState([]);
+  const [isinValue, setIsinValue] = useState("");
   const [error, setError] = useState("");
   const [validClass, setValidClass] = useState("");
 
@@ -31,9 +32,11 @@ const Home = () => {
     setISIN([...ISIN, value]);
     const wss = subscribe(value);
     setWs(wss);
+    setIsinValue("")
   };
 
   const handleValidation = (event) => {
+    setIsinValue(event.target.value);
     let value = isinClean(event.target.value);
     value = value.replace(/\s|-/g, "");
 
@@ -48,6 +51,7 @@ const Home = () => {
       setValidClass("error");
       return setError("ISIN is invalid!");
     }
+    
   };
 
   useEffect(() => {
@@ -82,6 +86,7 @@ const Home = () => {
               placeholder="Enter ISIN to add on Wishlist"
               name="isin"
               type="text"
+              value={isinValue}
               onChange={handleValidation}
             />
           </div>
