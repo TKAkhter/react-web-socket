@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import validator from "isin-validator";
 import { subscribe, unsubscribe } from "../components/Socket";
 import Table from "../components/Table/Table";
-import './Form.css'
+import "./Form.css";
 // import Modal from "../components/Modal";
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
     }
     if (ISIN.includes(value)) {
       setValidClass("error");
-      return setError("same");
+      return setError("ISIN is already in Watch List");
     }
     setISIN([...ISIN, value]);
     setWs([...ws, subscribe(value)]);
@@ -43,13 +43,15 @@ const Home = () => {
 
   useEffect(() => {
     ws.map((ws) => {
+        console.log("🚀 ~ file: Home.js ~ line 47 ~ //ws.map ~ ws", ws);
       ws.onclose = function (event) {
+        alert('Prices are out of Sync. Please reload page')
         console.log(
           "Socket is closed. Reconnect will be attempted in 5 seconds",
           event.reason
         );
         setTimeout(function () {
-          subscribe(ISIN);
+            subscribe(ISIN);
         }, 5000);
       };
       return () => {};
@@ -73,7 +75,7 @@ const Home = () => {
               type="text"
               onChange={handleValidation}
             />
-            <p class='invalid-error'>{error ? error : null}</p>
+            <p className="invalid-error">{error ? error : null}</p>
           </div>
           <div className="button-row">
             <input type="submit" />

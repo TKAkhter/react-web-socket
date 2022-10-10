@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import TableRows from "../TableRows";
-import './Table.css';
+import "./Table.css";
 
 const Table = ({ wsArr, isinArr, unsubscribe, setIsinArr }) => {
   const [rowsData, setRowsData] = useState([]);
@@ -11,12 +11,10 @@ const Table = ({ wsArr, isinArr, unsubscribe, setIsinArr }) => {
     rows.splice(index, 1);
     setRowsData(rows);
     unsubscribe(isin, ws);
-    // setIsinArr(isinArr.filter(item => item !== isin));
-    console.log(index, "index");
-    console.log(isin, "isin");
-    console.log(isinArr, "isinArr");
-    console.log(ws, "ws");
-
+    const newIsinArr = isinArr.filter((item) => item !== isin);
+    setIsinArr(() => {
+      return newIsinArr;
+    });
   };
 
   useEffect(() => {
@@ -29,9 +27,9 @@ const Table = ({ wsArr, isinArr, unsubscribe, setIsinArr }) => {
         ws: wsArr[idx],
       };
       setRowsData([...rowsData, rowsInput]);
-      return () => {}
+      return () => {};
     });
-  }, [wsArr, isinArr]);
+  }, [wsArr]);
 
   return (
     <div className="table-section">

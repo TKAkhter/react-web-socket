@@ -11,6 +11,12 @@ function TableRows({ rowsData, deleteTableRows, status }) {
   ]);
   if (rowsData.length === 0) return;
 
+  const deleteTableData = (index, row, setRow) => {
+    let rowUpdate = row;
+    delete rowUpdate[index];
+    setRow(row);
+  };
+
   return rowsData.map((data, index) => {
     const { isin, ws } = data;
 
@@ -42,7 +48,10 @@ function TableRows({ rowsData, deleteTableRows, status }) {
         <td>
           <button
             className="btn btn-outline-danger inactive"
-            onClick={() => deleteTableRows(index, isin, ws)}
+            onClick={() => {
+              deleteTableRows(index, isin, ws);
+              deleteTableData(index, row, setRow);
+            }}
           >
             Delete
           </button>

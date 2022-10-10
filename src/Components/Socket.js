@@ -2,16 +2,16 @@ const Socket = () => {
   return <></>;
 };
 
-export const subscribe = (isin) => {
+export const subscribe = (isin, wsArr) => {
   const ws = new WebSocket("ws://159.89.15.214:8080/");
-  if (Array.isArray(isin)) {
-    reconnect(isin, ws);
-  }
+
   const msg = {
     subscribe: isin,
   };
+  console.log("🚀 ~ file: Socket.js ~ line 11 ~ subscribe ~ isin", isin);
 
   ws.onopen = () => {
+    console.log(ws.readyState, "ws.readyState");
     console.log(`[Open] Connection Opened ${isin}`);
     ws.send(JSON.stringify(msg));
   };
@@ -30,17 +30,6 @@ export const unsubscribe = (isin, ws) => {
   };
   ws.send(JSON.stringify(msg));
   console.log(`[Close] Connection unsubscribed ${isin}`);
-};
-
-export const reconnect = (isin, ws) => {
-  isin.map((reconnectIsin) => {
-    const newMsg = {
-      subscribe: reconnectIsin,
-    };
-    ws.send(JSON.stringify(newMsg));
-    console.log(`[Reconnect] Connection Reconnected ${reconnectIsin}`);
-    return () => {};
-  });
 };
 
 export default Socket;
