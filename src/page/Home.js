@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import validator from "isin-validator";
-import { subscribe, unsubscribe, initialize } from "../components/Socket";
+import { subscribe, unsubscribe } from "../components/Socket";
 import Table from "../components/Table/Table";
 import "./Form.css";
 // import Modal from "../components/Modal";
@@ -18,14 +18,18 @@ const Home = () => {
     const value = isinClean(event.target.isin.value);
     if (!value) {
       setValidClass("error");
-      return setError("empty");
+      return setError("ISIN is empty, please add enter correct ISIN");
+    }
+    if (validator(value)) {
+      setValidClass("error");
+      return setError("ISIN is invalid!");
     }
     if (ISIN.includes(value)) {
       setValidClass("error");
       return setError("ISIN is already in Watch List");
     }
     setISIN([...ISIN, value]);
-    const wss = initialize(value);
+    const wss = subscribe(value);
     setWs(wss);
   };
 
@@ -47,18 +51,18 @@ const Home = () => {
   };
 
   useEffect(() => {
-    ws.onclose = function (event) {
-      alert(
-        "Prices are out of Sync.App is trying to reconnect. If price doesn't change, Please reload page"
-      );
-      console.log(
-        "Socket is closed. Reconnect will be attempted in 5 seconds",
-        event.reason
-      );
-      setTimeout(function () {
-        subscribe(ISIN, ws);
-      }, 5000);
-    };
+    // ws.onclose = function (event) {
+    //   alert(
+    //     "Prices are out of Sync.App is trying to reconnect. If price doesn't change, Please reload page"
+    //   );
+    //   console.log(
+    //     "Socket is closed. Reconnect will be attempted in 5 seconds",
+    //     event.reason
+    //   );
+    //   setTimeout(function () {
+    //     subscribe(ISIN);
+    //   }, 5000);
+    // };
     return () => {};
   }, [ws, ISIN]);
 

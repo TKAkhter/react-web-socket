@@ -13,7 +13,6 @@ const Table = ({ ws, isinArr, unsubscribe, setIsinArr }) => {
     rows.splice(index, 1);
     setRowsData(rows);
     unsubscribe(isin, ws);
-    
   };
 
   useEffect(() => {
