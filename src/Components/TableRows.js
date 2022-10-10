@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-function TableRows({ rowsData, deleteTableRows }) {
+function TableRows({ rowsData, deleteTableRows, status }) {
   const [row, setRow] = useState([
     {
       isin: "",
-      price: "100",
+      price: "",
       bid: "",
       ask: "",
     },
@@ -12,7 +12,7 @@ function TableRows({ rowsData, deleteTableRows }) {
   if (rowsData.length === 0) return;
 
   return rowsData.map((data, index) => {
-    const { isin, price, bid, ask, ws } = data;
+    const { isin, ws } = data;
 
     ws.onmessage = function (event) {
       const data = JSON.parse(event.data);
@@ -22,7 +22,6 @@ function TableRows({ rowsData, deleteTableRows }) {
           [index]: JSON.parse(event.data),
         });
       }
-      // console.log(JSON.parse(event.data),index);
       console.log(row, "row");
     };
 
@@ -32,20 +31,20 @@ function TableRows({ rowsData, deleteTableRows }) {
           <p>{isin}</p>
         </td>
         <td>
-          <p>{row[index] ? parseFloat(row[index].price).toFixed(3) : ''}</p>
+          <p>{row[index] ? parseFloat(row[index].price).toFixed(3) : ""}</p>
         </td>
         <td>
-          <p>{row[index] ? parseFloat(row[index].bid).toFixed(3) : ''}</p>
+          <p>{row[index] ? parseFloat(row[index].bid).toFixed(3) : ""}</p>
         </td>
         <td>
-          <p>{row[index] ? parseFloat(row[index].ask).toFixed(3) : ''}</p>
+          <p>{row[index] ? parseFloat(row[index].ask).toFixed(3) : ""}</p>
         </td>
         <td>
           <button
-            className="btn btn-outline-danger"
+            className="btn btn-outline-danger inactive"
             onClick={() => deleteTableRows(index, isin, ws)}
           >
-            x
+            Delete
           </button>
         </td>
       </tr>

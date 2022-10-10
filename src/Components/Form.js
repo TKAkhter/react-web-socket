@@ -28,10 +28,6 @@ const Form = () => {
     if (validator(value)) {
       return setError("ISIN is invalid!");
     }
-    console.log(
-      "🚀 ~ file: Socket.js ~ line 69 ~ handleValidation ~ event",
-      event.target.value
-    );
   };
 
   return (
@@ -54,13 +50,15 @@ const Form = () => {
           </div>
           <div className="button-row">
             <input type="submit" />
-            {/* <button onClick={() => setPause(!isPaused)}>
-              {isPaused ? "Resume" : "Pause"}
-            </button> */}
           </div>
         </form>
       </div>
-      <Table wsArr={ws} isinArr={ISIN} setIsinArr={setISIN} unsubscribe={unsubscribe} />
+      <Table
+        wsArr={ws}
+        isinArr={ISIN}
+        setIsinArr={setISIN}
+        unsubscribe={unsubscribe}
+      />
     </div>
   );
 };
