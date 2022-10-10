@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import TableRows from "./TableRows";
+import TableRows from "../TableRows";
+import './Table.css';
+
 const Table = ({ wsArr, isinArr, unsubscribe, setIsinArr }) => {
   const [rowsData, setRowsData] = useState([]);
   const [isPaused, setPause] = useState(false);
@@ -9,26 +11,25 @@ const Table = ({ wsArr, isinArr, unsubscribe, setIsinArr }) => {
     rows.splice(index, 1);
     setRowsData(rows);
     unsubscribe(isin, ws);
-    const arr = isinArr;
-    const idx = arr.indexOf(isin);
-    if (idx > -1) {
-      // only splice array when item is found
-      arr.splice(idx, 1); // 2nd parameter means remove one item only
-    }
-    setIsinArr(arr);
+    // setIsinArr(isinArr.filter(item => item !== isin));
+    console.log(index, "index");
+    console.log(isin, "isin");
     console.log(isinArr, "isinArr");
+    console.log(ws, "ws");
+
   };
 
   useEffect(() => {
     isinArr.map((isin, idx) => {
       const rowsInput = {
         isin: isin,
-        price: "100",
+        price: "",
         bid: "",
         ask: "",
         ws: wsArr[idx],
       };
-      return setRowsData([...rowsData, rowsInput]);
+      setRowsData([...rowsData, rowsInput]);
+      return () => {}
     });
   }, [wsArr, isinArr]);
 
